@@ -16,14 +16,19 @@ function Home() {
   const movies = useSelector((state) => state.movies);
   useEffect(() => {
     dispatch(getMovies());
-    setBestMovie(
-      ...movies?.filter((movie) => {
-        return movie.bestsaller || {};
-      })
-    );
-  }, [dispatch]);
+  }, []);
 
-  if (!movies || movies.length === 0) return null;
+  useEffect(() => {
+    if (movies) {
+      setBestMovie(
+        ...movies?.filter((movie) => {
+          return movie.bestsaller;
+        })
+      );
+    }
+  }, [movies]);
+
+  // if (!movies || movies.length === 0) return null;
 
   return (
     <>

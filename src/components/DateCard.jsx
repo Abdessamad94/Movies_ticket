@@ -1,7 +1,7 @@
 import React from "react";
-import { Day } from "./style/SingleMovie";
-import Button from "../components/style/Button";
+import { Day, Time } from "./style/SingleMovie";
 import { formatMovieDate } from "../helper/date";
+import { Link } from "react-router-dom";
 
 export default function DateCard({ schedule, id }) {
   const { dayOfMonth, dayName, monthName } = formatMovieDate(
@@ -9,7 +9,6 @@ export default function DateCard({ schedule, id }) {
   );
   return (
     <Day>
-      {console.log(dayOfMonth)}
       <div className="date">
         <div className="day">{dayName}</div>
         <div className="daynum">{dayOfMonth}</div>
@@ -18,15 +17,15 @@ export default function DateCard({ schedule, id }) {
       <div className="time">
         {schedule.times.map((time) => {
           return (
-            <Button
+            <Time
               as={Link}
-              to={`/Movie/${id}/${time}/${schedule.dayTimestamp}`}
+              to={`/Checkout/${id}/${time}/${schedule.dayTimestamp}`}
               bg="transparent"
               color="white"
               borderColor="white"
             >
               {time}
-            </Button>
+            </Time>
           );
         })}
       </div>

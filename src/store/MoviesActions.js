@@ -2,6 +2,7 @@ import Movies from "../server/Movies";
 
 export const getMovies = () => {
   return (dispatch) => {
+
     dispatch({ type: "ALL_MOVIES", paylod: Movies });
   };
 };

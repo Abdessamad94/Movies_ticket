@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../components/style/Container";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { MovieTicket } from "../components/style/SingleMovie";
 import { connect, useDispatch } from "react-redux";
 import { getMovies } from "../store/MoviesActions";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatMovieDate } from "../helper/date";
 
 function Checkout({ movies }) {
   const { id, time, dayTimestamp } = useParams();
+  const navigate = useNavigate();
+  const [movie, setMovie] = useState({});
   const { dayOfMonth, dayName, monthName } = formatMovieDate(dayTimestamp);
   const dispatch = useDispatch();
   const initialValues = {
@@ -18,6 +20,7 @@ function Checkout({ movies }) {
     email: "",
     phone: "",
   };
+  console.log(dayOfMonth);
   const validate = (values) => {
     const errors = {};
     if (!values.firstName) {
@@ -59,21 +62,24 @@ function Checkout({ movies }) {
     initialValues: initialValues,
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      navigate(`/Thankyou/${id}/${time}/${dayTimestamp}`);
     },
   });
 
   useEffect(() => {
     dispatch(getMovies());
-  }, [dispatch]);
-
-  const movie = movies?.filter((movie) => {
-    return movie.id === id;
-  });
+    if (movies) {
+      setMovie(
+        ...movies?.filter((movie) => {
+          return movie.id === id;
+        })
+      );
+    }
+  }, [movies]);
 
   return (
     <>
-      <Container>
+      <Container bg={movie.landscape}>
         <div className="form">
           <form onSubmit={formik.handleSubmit}>
             <input
@@ -116,13 +122,16 @@ function Checkout({ movies }) {
           </form>
         </div>
         <div className="movieInfo">
-          <MovieTicket bg="">
+          <MovieTicket img={movie.image}>
             <div className="ticketinfo">
               <div className="date">
-                {monthName},{dayName} {dayOfMonth}
+                {new Date(parseInt(dayTimestamp)).toDateString()}
               </div>
               <div className="name">{movie.title}</div>
-              <div className="price">{movie.price} DH</div>
+              <div className="pt">
+                <div className="time">{time}</div>
+                <div className="price">Total: {movie.price} DH</div>
+              </div>
             </div>
           </MovieTicket>
         </div>

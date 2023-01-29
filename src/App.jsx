@@ -6,6 +6,7 @@ import Header from "./components/style/Header";
 import Movie from "./pages/SingleMovie";
 import { AppContainer } from "./components/style/AppContainer";
 import Checkout from "./pages/Checkout";
+import Thankyou from "./pages/Thankyou";
 
 function App() {
   const navLinks = [
@@ -20,10 +21,10 @@ function App() {
   ];
 
   return (
-    <AppContainer background="https://images5.alphacoders.com/688/688145.jpg">
+    <AppContainer>
       <Header>
         <div className="logo">
-          <Link path="/" element={Home}>
+          <Link path="/Home" element={Home}>
             MOVIES
           </Link>
         </div>
@@ -44,7 +45,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About />} />
         <Route path="/Movie/:id" element={<Movie />} />
-        <Route path="/Checkout/" element={<Checkout />} />
+        <Route
+          path="/Checkout/:id/:time/:dayTimestamp"
+          element={<Checkout />}
+        />
+        <Route
+          path="/Thankyou/:id/:time/:dayTimestamp"
+          element={<Thankyou />}
+        />
       </Routes>
     </AppContainer>
   );

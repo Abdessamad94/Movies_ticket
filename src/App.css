@@ -4,7 +4,7 @@
 }
 
 .App{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(https://images5.alphacoders.com/688/688145.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
     background-repeat: no-repeat;
     background-blend-mode: multiply;
     background-size: cover;

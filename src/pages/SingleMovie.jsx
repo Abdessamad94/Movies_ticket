@@ -11,6 +11,7 @@ import { useDispatch, connect, useSelector } from "react-redux";
 import { getMovies } from "../store/MoviesActions";
 import DateCard from "../components/DateCard";
 import YouTube from "react-youtube";
+import { FaImdb } from "react-icons/fa";
 
 function Movie() {
   const { id } = useParams();
@@ -19,32 +20,38 @@ function Movie() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMovies());
-    setMovie(
-      ...movies?.filter((movie) => {
-        return movie.id === id;
-      })
-    );
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    if (movies) {
+      setMovie(
+        ...movies?.filter((movie) => {
+          return movie.id === id;
+        })
+      );
+    }
+  }, [movies]);
 
   const opts = {
-    width: "240",
+    width: "400",
+    height: "200",
     playerVars: {
       autoplay: 1,
     },
   };
   return (
     <>
-      <SingleMovie bg={movie?.landscape}>
+      <SingleMovie back={movie.landscape}>
         {console.log(movie)}
         <MovieInfoContianer>
           <MovieTrailer>
             <div className="trailer">
               <YouTube videoId={movie?.trailer} opts={opts} />
             </div>
-            <div>
-              <h2>{movie?.title}</h2>
+            <div className="infomovie">
+              <h1>{movie?.title}</h1>
               <p>{movie?.description}</p>
-              <div>{movie?.imdbRate} Imdb</div>
+              <div>{movie?.price} DH</div>
             </div>
           </MovieTrailer>
           <MovieScheduleContainer>
